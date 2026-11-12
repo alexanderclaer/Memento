@@ -10,7 +10,7 @@ Aún no incluye base de datos, backend ni APIs.
 
 ## Tecnologías previstas
 - Frontend: React (Vite)
-- Backend: Spring Boot (próximas etapas)
+- Backend: Spring Boot (java 25)
 - Base de datos: PostgreSQL (próximas etapas)
 
 ## Estructura
