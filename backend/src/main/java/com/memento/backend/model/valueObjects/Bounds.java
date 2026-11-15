@@ -1,5 +1,6 @@
-package com.memento.backend.model;
+package com.memento.backend.model.valueObjects;
 
+//Clase auxiliar para representar los límites de una nota en el espacio de trabajo
 public class Bounds {
     private double x;
     private double y;
