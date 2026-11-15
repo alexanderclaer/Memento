@@ -2,7 +2,12 @@ package com.memento.backend.model;
 
 import java.time.Instant;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "topics")
 public class Topic {
+    @Id
     private String id;
     private String title;
     private String bookId;
@@ -14,8 +19,7 @@ public class Topic {
     public Topic() {
     }
 
-    public Topic(String id, String title, String bookId, Instant topicDate) {
-        this.id = id;
+    public Topic(String title, String bookId, Instant topicDate) {
         this.title = title;
         this.bookId = bookId;
         this.topicDate = topicDate;

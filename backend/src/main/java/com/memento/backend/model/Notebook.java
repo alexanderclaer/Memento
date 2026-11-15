@@ -17,8 +17,7 @@ public class Notebook {
     // Constructors
     public Notebook() {}
 
-    public Notebook(String id, String name, String workspaceId) {
-        this.id = id;
+    public Notebook(String name, String workspaceId) {
         this.name = name;
         this.workspaceId = workspaceId;
         this.createdAt = Instant.now();

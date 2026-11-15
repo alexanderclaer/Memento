@@ -19,8 +19,7 @@ public class Workspace {
     public Workspace() {
     }
 
-    public Workspace(String id, String name, List<String> usersId) {
-        this.id = id;
+    public Workspace(String name, List<String> usersId) {
         this.name = name;
         this.usersId = usersId;
         this.createdAt = Instant.now();
