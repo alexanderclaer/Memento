@@ -1,6 +1,8 @@
 # Memento
 
-Plataforma web para gestionar apuntes de manera legible y práctica: cuadernos por materia, notas con etiquetas, archivos y búsqueda.
+Plataforma web para gestionar apuntes de manera legible y práctica: temas por cuaderno, notas con etiquetas, archivos y búsqueda.
+
+Implementación IA (En futuras etapas): Clasificar notas en categorias como formulas, datos historicos...
 
 > Proyecto del curso Taller de Programación.
 
@@ -10,13 +12,14 @@ Aún no incluye base de datos, backend ni APIs.
 
 ## Tecnologías previstas
 - Frontend: React (Vite)
-- Backend: Spring Boot (java 25)
-- Base de datos: PostgreSQL (próximas etapas)
+- Backend: Spring Boot (java 21)
+- Base de datos: MongoDB
 
 ## Estructura
 ```
 memento/
 └── frontend/
+└── backend/
 ```
 
 ## Cómo ejecutar el frontend
