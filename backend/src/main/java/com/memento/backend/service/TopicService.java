@@ -25,12 +25,15 @@ public class TopicService {
         topicRepository.save(topic);
     }
 
-    public void deleteTopic(String topicId) {
-            topicRepository.deleteById(topicId);
+    public Topic deleteTopic(Topic topic) {
+        if (topic != null) {
+            topicRepository.delete(topic);
+        }
+        return topic;
     }
 
-    public void deleteTopicById(String id) {
-        topicRepository.deleteById(id);
+    public Topic deleteTopicById(String id) {
+        return deleteTopic(getTopicById(id));
     }
 
     public void updateTopicById(String id, Topic updatedTopic) {
@@ -38,24 +41,57 @@ public class TopicService {
         updateTopic(updatedTopic);
     }
 
+    public Topic updateTopicDate(String id, Instant date){
+        Topic topic = findById(id);
+        if (topic!=null){
+            topic.setTopicDate(date);
+            return topic;
+        }
+        return null;
+    }
+
+    public Topic updateTitle(String id, String title) {
+        Topic existingTopic = topicRepository.findById(id).orElse(null);
+        if (existingTopic != null) {
+            existingTopic.setTitle(title);
+            updateTopic(existingTopic);
+            return existingTopic;
+        }
+        return null;
+    }
+
     public Topic getTopicById(String id) {
         return topicRepository.findById(id).orElse(null);
     }
    
+    public Topic findById(String id){
+        return topicRepository.findById(id).orElse(null);
+    }
+
+    public Topic moveToNotebook(String topicId, String newNotebookId){
+        Topic topic = findById(topicId);
+        if(topic!=null){
+            topic.setNotebookId(newNotebookId);
+            updateTopic(topic);
+            return topic;
+        }
+        return null;
+    }
+
     public List<Topic> getAllTopics() {
         return topicRepository.findAll();
     }
 
     public Topic getTopicByTitle(String title) {
-        return topicRepository.getTopicByTitle(title);
+        return topicRepository.findTopicByTitle(title);
     }
 
     public List<Topic> getTopicsByTitleContaining(String title) {
-        return topicRepository.getTopicsByTitleContaining(title);
+        return topicRepository.findTopicsByTitleContaining(title);
     }
 
     public List<Topic> getTopicsByNotebookId(String notebookId) {
-        return topicRepository.getTopicByNotebookId(notebookId);
+        return topicRepository.findTopicByNotebookId(notebookId);
     }
 
 }

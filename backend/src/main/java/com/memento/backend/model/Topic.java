@@ -48,7 +48,7 @@ public class Topic {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setNotebookId(String bookId) {
         this.bookId = bookId;
     }
 
