@@ -8,7 +8,7 @@ Implementación IA (En futuras etapas): Clasificar notas en categorias como form
 
 ## Estado actual
 Primera entrega: estructura inicial del repositorio y primera versión de la interfaz (Front-End).
-Aún no incluye base de datos, backend ni APIs.
+En desarrollo: base de datos, backend y API.
 
 ## Tecnologías previstas
 - Frontend: React (Vite)
