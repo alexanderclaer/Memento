@@ -73,6 +73,15 @@ public class NoteService {
         return false;
     }
 
+    public void deleteAttachment(String noteId, String attachmentId) {
+        Note note = noteRepository.findById(noteId).orElse(null);
+        if (note != null) {
+            List<Attachment> attachments = note.getAttachments();
+            attachments.removeIf(att -> att.getId().equals(attachmentId));
+            noteRepository.save(note);
+        }
+    }
+
     public Bounds getBounds(String id) {
         Note note = noteRepository.findById(id).orElse(null);
         if (note != null) {

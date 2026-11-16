@@ -17,6 +17,11 @@ public class Content {
     }
 
     // 2. Constructor principal para notas rápidas (asume MARKDOWN por defecto)
+    public Content(String body) {
+        this.body = body;
+        this.attachments = new ArrayList<>();
+    }
+
     public Content(String body, List<Attachment> attachments) {
         this.body = body;
         this.attachments = attachments != null ? attachments : new ArrayList<>();
