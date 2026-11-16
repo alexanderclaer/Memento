@@ -25,13 +25,20 @@ public class NoteService {
         return noteRepository.save(note);
     }
 
-    public void updateNote(Note note) {
-        noteRepository.save(note);
+    public Note updateNote(Note note) {
+        if (note.getId() == null || !noteRepository.existsById(note.getId())) {
+            return null;
+        }
+        return noteRepository.save(note);
     }
 
-    public void updateNoteById(String id, Note updatedNote) {
+    public Note findById(String id) {
+        return noteRepository.findById(id).orElse(null);
+    }
+
+    public Note updateNoteById(String id, Note updatedNote) {
         updatedNote.setId(id);
-        noteRepository.save(updatedNote);
+        return noteRepository.save(updatedNote);
     }
 
     public void updateNoteContent(String id, Content newContent) {
@@ -42,24 +49,40 @@ public class NoteService {
         }
     }
 
-    public void updateBody(String id, String newBody){
+    public Note updateBody(String id, String newBody){
         Note existingNote = noteRepository.findById(id).orElse(null);
         if (existingNote != null) {
-            existingNote.getContent().setBody(newBody);
-            updateNote(existingNote);
+            existingNote.updateContentBody(newBody);
         }
+        return updateNote(existingNote);
     }
 
-    public void updateBounds(String id, Bounds newBounds) {
+    public Note updateBounds(String id, Bounds newBounds) {
         Note existingNote = noteRepository.findById(id).orElse(null);
         if (existingNote != null) {
             existingNote.setBounds(newBounds);
             updateNote(existingNote);
+            return existingNote;
         }
+        return null;
     }
 
-    public void deleteNoteById(String id) {
+    public Note moveNoteToTopic(String noteId, String newTopicId) {
+        Note existingNote = findById(noteId);
+        if (existingNote != null) {
+            existingNote.setTopicId(newTopicId);
+            updateNote(existingNote);
+            return existingNote;
+        }
+        return null;
+    }
+
+    public void deleteNote(String id) {
         noteRepository.deleteById(id);
+    }
+
+    public void deleteByTopicId(String topicId) {
+        noteRepository.deleteByTopicId(topicId);
     }
 
     // Método clave para Memento: Agregar adjuntos de forma independiente
@@ -67,7 +90,7 @@ public class NoteService {
         Note note = noteRepository.findById(id).orElse(null);
         if (note != null) {
             note.addAttachment(attachment); // Delegación en el modelo
-            noteRepository.save(note);
+            updateNote(note);
             return true;
         }
         return false;
@@ -78,7 +101,7 @@ public class NoteService {
         if (note != null) {
             List<Attachment> attachments = note.getAttachments();
             attachments.removeIf(att -> att.getId().equals(attachmentId));
-            noteRepository.save(note);
+            updateNote(note);
         }
     }
 
@@ -110,9 +133,5 @@ public class NoteService {
 
     public List<Note> getNotesByTopicId(String topicId) {
         return noteRepository.findByTopicId(topicId);
-    }
-
-    public List<Note> getNotesByTitleContaining(String title) {
-        return noteRepository.findByTitleContaining(title);
     }
 }

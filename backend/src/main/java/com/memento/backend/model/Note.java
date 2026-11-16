@@ -59,6 +59,13 @@ public class Note {
         this.bounds.setHeight(height);
     }
 
+    public void updateContentBody(String newBody) {
+        if (this.content == null) {
+            this.content = new Content();
+        }
+        this.content.setBody(newBody);
+    }
+
     // Getters and Setters
     public String getId() {
         return id;
