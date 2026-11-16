@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.memento.backend.model.Note;
 import com.memento.backend.model.valueObjects.Attachment;
+import com.memento.backend.model.valueObjects.Bounds;
 import com.memento.backend.model.valueObjects.Content;
 import com.memento.backend.repository.NoteRepository;
 
@@ -49,6 +50,14 @@ public class NoteService {
         }
     }
 
+    public void updateBounds(String id, Bounds newBounds) {
+        Note existingNote = noteRepository.findById(id).orElse(null);
+        if (existingNote != null) {
+            existingNote.setBounds(newBounds);
+            updateNote(existingNote);
+        }
+    }
+
     public void deleteNoteById(String id) {
         noteRepository.deleteById(id);
     }
@@ -64,11 +73,25 @@ public class NoteService {
         return false;
     }
 
+    public Bounds getBounds(String id) {
+        Note note = noteRepository.findById(id).orElse(null);
+        if (note != null) {
+            return note.getBounds();
+        }
+        return null;
+    }
+
     public List<Note> getAllNotes() {
         return noteRepository.findAll();
     }
 
     public Note getNoteById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null; // Manejo de caso nulo o vacío
+        }
+        if (!noteRepository.existsById(id)) {
+            return null; // Manejo de caso donde la nota no existe
+        }
         return noteRepository.findById(id).orElse(null);
     }
 

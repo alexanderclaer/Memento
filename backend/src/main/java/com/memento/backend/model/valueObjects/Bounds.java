@@ -18,6 +18,13 @@ public class Bounds {
         this.height = height;
     }
 
+    public Bounds(Bounds other) {
+        this.x = other.x;
+        this.y = other.y;
+        this.width = other.width;
+        this.height = other.height;
+    }
+
     // Getters and Setters
     public double getX() {
         return x;

@@ -25,11 +25,38 @@ public class Note {
     public Note() {
     }
 
-    public Note(Content content, NoteType noteType, String topicId, Bounds bounds) {
-        this.content = content;
-        this.noteType = noteType;
+    public Note(NoteType noteType, String topicId, Bounds bounds) {
+        this.content = new Content(""); // Initialize content by default
+
+        if (noteType != null) {
+            this.noteType = noteType;
+        } else {
+            this.noteType = NoteType.TEXT; // Default note type
+        }
+
         this.topicId = topicId;
-        this.bounds = bounds;
+
+        if (bounds != null) {
+            this.bounds = bounds;
+        } else {
+            this.bounds = new Bounds(0, 0, 100, 100); // Default bounds if none provided
+        }
+    }
+
+    public void updatePosition(double x, double y) {
+        if (this.bounds == null) {
+            this.bounds = new Bounds();
+        }
+        this.bounds.setX(x);
+        this.bounds.setY(y);
+    }
+
+    public void updateSize(double width, double height) {
+        if (this.bounds == null) {
+            this.bounds = new Bounds();
+        }
+        this.bounds.setWidth(width);
+        this.bounds.setHeight(height);
     }
 
     // Getters and Setters
@@ -69,8 +96,8 @@ public class Note {
         return bounds;
     }
 
-    public void setBounds(double x, double y, double width, double height) {
-        this.bounds = new Bounds(x, y, width, height);
+    public void setBounds(Bounds bounds) {
+        this.bounds = bounds;
     }
 
     // --- MÉTODOS DE DELEGACIÓN (ATAJOS) ---
