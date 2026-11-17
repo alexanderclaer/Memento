@@ -57,7 +57,7 @@ public class NotebookController {
 
     //Returns notebooks from partial search
     @GetMapping("/search")
-    public ResponseEntity<List<Notebook>> getNotebooksByTitleContaining(@RequestBody String title){
+    public ResponseEntity<List<Notebook>> getNotebooksByTitleContaining(@RequestParam("title") String title){
         return ResponseEntity.ok(notebookService.getNotebooksByTitleContaining(title));
     }
     
