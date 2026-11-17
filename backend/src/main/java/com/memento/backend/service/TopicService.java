@@ -46,6 +46,7 @@ public class TopicService {
         Topic topic = findById(id);
         if (topic!=null){
             topic.setTopicDate(date);
+            updateTopic(topic);
             return topic;
         }
         return null;
