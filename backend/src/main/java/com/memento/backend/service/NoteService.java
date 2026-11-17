@@ -51,9 +51,10 @@ public class NoteService {
 
     public Note updateBody(String id, String newBody){
         Note existingNote = noteRepository.findById(id).orElse(null);
-        if (existingNote != null) {
-            existingNote.updateContentBody(newBody);
+        if (existingNote == null) {
+            return null;
         }
+        existingNote.updateContentBody(newBody);
         return updateNote(existingNote);
     }
 
