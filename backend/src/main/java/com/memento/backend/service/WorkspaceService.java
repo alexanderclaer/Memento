@@ -11,10 +11,12 @@ import com.memento.backend.repository.WorkspaceRepository;
 @Service 
 public class WorkspaceService {
 
-    private WorkspaceRepository workspaceRepository;
+    private final WorkspaceRepository workspaceRepository;
+    private final NotebookService notebookService;
 
-    public WorkspaceService(WorkspaceRepository workspaceRepository) {
+    public WorkspaceService(WorkspaceRepository workspaceRepository, NotebookService notebookService) {
         this.workspaceRepository = workspaceRepository;
+        this.notebookService = notebookService;
     }
 
     public Workspace createWorkspace(Workspace workspace) {
@@ -30,6 +32,7 @@ public class WorkspaceService {
         if (workspace == null) {
             return null;
         }
+        notebookService.deleteByWorkspaceId(workspace.getId());
         workspaceRepository.delete(workspace);
         return workspace;
     }
