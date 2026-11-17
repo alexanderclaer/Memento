@@ -75,4 +75,8 @@ public class NotebookService {
     public Notebook getNotebookByTitle(String title) {
         return notebookRepository.findByTitle(title);
     }
+
+    public void deleteByWorkspaceId(String workspaceId) {
+        
+    }
 }

@@ -12,4 +12,5 @@ public interface NotebookRepository extends MongoRepository<Notebook, String> {
     List<Notebook> findAll();
     List<Notebook> findByTitleContaining(String title);
     Notebook findByTitle(String title);
+    void deleteByWorkspaceId(String workspaceId);
 }

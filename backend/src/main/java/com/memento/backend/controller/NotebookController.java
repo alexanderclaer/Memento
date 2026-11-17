@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.memento.backend.model.Notebook;
 import com.memento.backend.service.NotebookService;
+import com.memento.backend.service.TopicService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +28,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class NotebookController {
 
     private final NotebookService notebookService;
+    private final TopicService topicService;
 
-    public NotebookController(NotebookService notebookService){
+    public NotebookController(NotebookService notebookService, TopicService topicService){
         this.notebookService = notebookService;
+        this.topicService = topicService;
     }
 
 
@@ -77,10 +81,8 @@ public class NotebookController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNotebook(@PathVariable String id){
         notebookService.deleteNotebookById(id);
+        topicService.deleteByNotebookId(id);
         return (ResponseEntity.noContent().build());
     }
-
-
-
 
 }

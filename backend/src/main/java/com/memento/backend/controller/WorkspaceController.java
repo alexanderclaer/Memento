@@ -75,3 +75,11 @@ public class WorkspaceController {
         return ResponseEntity.ok(workspaceService.getWorkspacesByUserId(userId));
     }
     
+    @DeleteMapping({"id"})
+    public ResponseEntity<Void> deleteWorkspace(@PathVariable String id){
+        Workspace workspace = workspaceService.deleteWorkspaceById(id);
+        notebookService.deleteByWorkspaceId(id);
+        return workspace != null ? ResponseEntity.noContent().build(): ResponseEntity.notFound().build();
+    }
+    
+}

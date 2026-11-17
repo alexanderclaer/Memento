@@ -26,9 +26,10 @@ public class TopicService {
     }
 
     public Topic deleteTopic(Topic topic) {
-        if (topic != null) {
-            topicRepository.delete(topic);
+        if (topic == null) {
+            return null;
         }
+        topicRepository.delete(topic);
         return topic;
     }
 
@@ -92,6 +93,10 @@ public class TopicService {
 
     public List<Topic> getTopicsByNotebookId(String notebookId) {
         return topicRepository.findTopicByNotebookId(notebookId);
+    }
+
+    public void deleteByNotebookId(String notebookId) {
+        topicRepository.deleteByNotebookId(notebookId);
     }
 
 }
