@@ -9,7 +9,7 @@ public class Notebook {
     
     @Id 
     private String id;
-    private String name;
+    private String title;
     private Instant createdAt;
     private Instant updatedAt;
     private String workspaceId;
@@ -17,8 +17,8 @@ public class Notebook {
     // Constructors
     public Notebook() {}
 
-    public Notebook(String name, String workspaceId) {
-        this.name = name;
+    public Notebook(String title, String workspaceId) {
+        this.title = title;
         this.workspaceId = workspaceId;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
@@ -33,12 +33,12 @@ public class Notebook {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Instant getCreatedAt() {

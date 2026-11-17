@@ -20,6 +20,23 @@ public class NotebookService {
         return notebookRepository.save(notebook);
     }
 
+    public Notebook findById(String id){
+        Notebook notebook = notebookRepository.findById(id)
+            .orElse(null);
+        return notebook != null ? notebook: null;
+    }
+
+    public Notebook updateTitle(String id, String title){
+        Notebook notebook = getNotebookById(id);
+        notebook.setTitle(title);
+        updateNotebook(notebook);
+        return notebook;
+    }
+
+    public Boolean existsNotebook(String id){
+        return notebookRepository.existsById(id);
+    }
+
     public void updateNotebook(Notebook notebook) {
         notebook.setUpdatedAt(Instant.now());
         notebookRepository.save(notebook);
