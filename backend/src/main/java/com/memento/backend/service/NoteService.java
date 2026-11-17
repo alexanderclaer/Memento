@@ -9,6 +9,7 @@ import com.memento.backend.model.valueObjects.Attachment;
 import com.memento.backend.model.valueObjects.Bounds;
 import com.memento.backend.model.valueObjects.Content;
 import com.memento.backend.repository.NoteRepository;
+import com.memento.backend.repository.TopicRepository;
 
 /**
  * NoteService
@@ -16,9 +17,11 @@ import com.memento.backend.repository.NoteRepository;
 @Service
 public class NoteService {
     private final NoteRepository noteRepository;
+    private final TopicRepository topicRepository;
 
-    public NoteService(NoteRepository noteRepository) {
+    public NoteService(NoteRepository noteRepository, TopicRepository topicRepository) {
         this.noteRepository = noteRepository;
+        this.topicRepository = topicRepository;
     }
 
     public Note createNote(Note note) {
@@ -70,10 +73,9 @@ public class NoteService {
 
     public Note moveNoteToTopic(String noteId, String newTopicId) {
         Note existingNote = findById(noteId);
-        if (existingNote != null) {
+        if (existingNote != null && topicRepository.existsById(newTopicId)) {
             existingNote.setTopicId(newTopicId);
-            updateNote(existingNote);
-            return existingNote;
+            return updateNote(existingNote);
         }
         return null;
     }
