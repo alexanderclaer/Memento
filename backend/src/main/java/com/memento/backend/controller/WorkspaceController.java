@@ -1,6 +1,5 @@
 package com.memento.backend.controller;
 
-import com.memento.backend.service.NotebookService;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -25,12 +24,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("api/workspaces") 
 @CrossOrigin(origins = "*")
 public class WorkspaceController {
-    private final NotebookService notebookService;
     private final WorkspaceService workspaceService;
 
-    public WorkspaceController(WorkspaceService workspaceService, NotebookService notebookService){
+    public WorkspaceController(WorkspaceService workspaceService) {
         this.workspaceService = workspaceService;
-        this.notebookService = notebookService;
     }
 
     @PostMapping
@@ -76,7 +73,6 @@ public class WorkspaceController {
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteWorkspace(@PathVariable("id") String id){
         Workspace workspace = workspaceService.deleteWorkspaceById(id);
-        notebookService.deleteByWorkspaceId(id);
         return workspace != null ? ResponseEntity.noContent().build(): ResponseEntity.notFound().build();
     }
     
