@@ -41,30 +41,28 @@ public class WorkspaceController {
     
 
     @GetMapping("{id}")
-    public ResponseEntity<Workspace> getWorkspaceById(@RequestParam String id) {
+    public ResponseEntity<Workspace> getWorkspaceById(@PathVariable("id") String id) {
         Workspace workspace = workspaceService.getWorkspaceById(id);
         return workspace != null ? ResponseEntity.ok(workspace): ResponseEntity.notFound().build();
     }
 
     @PatchMapping("{id}/name")
-    public ResponseEntity<Void> updateWorkspaceName(@PathVariable String id, @RequestBody String name){
-        Workspace workspace = workspaceService.getWorkspaceById(id);
-        if (workspace == null){
+    public ResponseEntity<Void> updateWorkspaceName(@PathVariable("id") String id, @RequestBody String name){
+        if (workspaceService.updateWorkspaceName(id, name) == null) {
             return ResponseEntity.notFound().build();
         }
-        workspaceService.updateWorkspaceName(id, name);
 
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Workspace> getWorkspaceByName(@RequestBody String name) {
+    public ResponseEntity<Workspace> getWorkspaceByName(@RequestParam("name") String name) {
         Workspace workspace = workspaceService.getWorkspaceByName(name);
         return workspace != null ? ResponseEntity.ok(workspace): ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Workspace>> getWorkspaceByNameContaining(@RequestBody String name){
+    public ResponseEntity<List<Workspace>> getWorkspaceByNameContaining(@RequestParam("name") String name){
         return ResponseEntity.ok(workspaceService.getWorkspaceByNameContaining(name)) ;
         
     }
@@ -75,8 +73,8 @@ public class WorkspaceController {
         return ResponseEntity.ok(workspaceService.getWorkspacesByUserId(userId));
     }
     
-    @DeleteMapping({"id"})
-    public ResponseEntity<Void> deleteWorkspace(@PathVariable String id){
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteWorkspace(@PathVariable("id") String id){
         Workspace workspace = workspaceService.deleteWorkspaceById(id);
         notebookService.deleteByWorkspaceId(id);
         return workspace != null ? ResponseEntity.noContent().build(): ResponseEntity.notFound().build();
