@@ -11,9 +11,11 @@ import com.memento.backend.repository.NotebookRepository;
 @Service 
 public class NotebookService {
     private final NotebookRepository notebookRepository;
+    private final TopicService topicService;
 
-    public NotebookService(NotebookRepository notebookRepository) {
+    public NotebookService(NotebookRepository notebookRepository, TopicService topicService) {
         this.notebookRepository = notebookRepository;
+        this.topicService = topicService;
     }
 
     public Notebook createNotebook(Notebook notebook) {
@@ -48,10 +50,11 @@ public class NotebookService {
     }
 
     public void deleteNotebookById(String notebookId) {
-        notebookRepository.deleteById(notebookId);
+        notebookRepository.findById(notebookId).ifPresent(this::deleteNotebook);
     }
 
     public void deleteNotebook(Notebook notebook) {
+        topicService.deleteByNotebookId(notebook.getId());
         notebookRepository.deleteById(notebook.getId());
     }
 
@@ -77,6 +80,6 @@ public class NotebookService {
     }
 
     public void deleteByWorkspaceId(String workspaceId) {
-        
+        notebookRepository.findByWorkspaceId(workspaceId).forEach(this::deleteNotebook);
     }
 }
