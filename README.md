@@ -62,19 +62,7 @@ npm run dev
 ```
 Luego abre http://localhost:5173
 
-## Evidencias de funcionamiento — Fase II
 
-Antes de la entrega, incluir capturas reales del prototipo funcionando, por ejemplo:
-- Pantalla principal de Memento.
-- Navegación entre las secciones implementadas.
-- Creación o consulta de una nota.
-- Ejemplo de una validación básica.
-
-Las evidencias pueden guardarse en una carpeta del repositorio y enlazarse aquí. No se incluyen capturas ficticias.
-
-## Evolución del repositorio
-
-El desarrollo de la Fase II continúa en este mismo repositorio. Los commits deben reflejar los avances realizados, con mensajes descriptivos sobre la interfaz, navegación, funcionalidades, validaciones y documentación.
 
 
 
