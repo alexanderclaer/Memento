@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.memento.backend.model.Topic;
-import com.memento.backend.service.NoteService;
 import com.memento.backend.service.TopicService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,11 +26,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin(origins = "*") // dominio sin restricciones para desarrollo local, cambiar en producción
 public class TopicController {
     private final TopicService topicService;
-    private final NoteService noteService;
 
-    public TopicController(TopicService topicService, NoteService noteService) {
+    public TopicController(TopicService topicService) {
         this.topicService = topicService;
-        this.noteService = noteService;
     }
 
     // 1. CREATE TOPIC
@@ -94,7 +91,6 @@ public class TopicController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Topic> deleteTopicById(@PathVariable String id) {
         Topic topic = topicService.deleteTopicById(id);
-        noteService.deleteByTopicId(id); // Delete on cascade all notes associated with the topic
         return topic != null ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
