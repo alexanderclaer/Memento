@@ -6,16 +6,19 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.memento.backend.model.Topic;
+import com.memento.backend.repository.NotebookRepository;
 import com.memento.backend.repository.TopicRepository;
 
 @Service 
 public class TopicService {
     private final TopicRepository topicRepository;
     private final NoteService noteService;
+    private final NotebookRepository notebookRepository;
 
-    public TopicService(TopicRepository topicRepository, NoteService noteService) {
+    public TopicService(TopicRepository topicRepository, NoteService noteService, NotebookRepository notebookRepository) {
         this.topicRepository = topicRepository;
         this.noteService = noteService;
+        this.notebookRepository = notebookRepository;
     }
 
     public Topic createTopic(Topic topic) {
@@ -75,7 +78,7 @@ public class TopicService {
 
     public Topic moveToNotebook(String topicId, String newNotebookId){
         Topic topic = findById(topicId);
-        if(topic!=null){
+        if (topic != null && notebookRepository.existsById(newNotebookId)) {
             topic.setNotebookId(newNotebookId);
             updateTopic(topic);
             return topic;
