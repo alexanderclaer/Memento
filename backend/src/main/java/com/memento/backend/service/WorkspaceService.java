@@ -26,8 +26,16 @@ public class WorkspaceService {
         workspaceRepository.save(workspace);
     }
 
-    public void deleteWorkspace(Workspace workspace) {
-        workspaceRepository.deleteById(workspace.getId());
+    public Workspace deleteWorkspace(Workspace workspace) {
+        if (workspace == null) {
+            return null;
+        }
+        workspaceRepository.delete(workspace);
+        return workspace;
+    }
+
+    public Workspace deleteWorkspaceById(String id){
+        return deleteWorkspace(getWorkspaceById(id));
     }
 
     public void updateWorkspaceById(String id, Workspace updatedWorkspace) {
@@ -35,8 +43,18 @@ public class WorkspaceService {
         updateWorkspace(updatedWorkspace);
     }
 
-    public void deleteWorkspaceById(String workspaceId) {
-        workspaceRepository.deleteById(workspaceId);
+
+    public String getWorkspaceName(String id){
+        Workspace workspace = getWorkspaceById(id);
+        return workspace != null ? workspace.getName(): null;
+    }
+
+    public String updateWorkspaceName(String id, String name){
+        Workspace workspace = getWorkspaceById(id);
+        if (workspace==null) {return null;}
+
+        workspace.setName(name);
+        return name;
     }
 
     public Workspace getWorkspaceById(String id) {
@@ -47,7 +65,7 @@ public class WorkspaceService {
         return workspaceRepository.findByName(name);
     }
 
-    public Workspace getWorkspaceByNameContaining(String name) {
+    public List<Workspace> getWorkspaceByNameContaining(String name) {
         return workspaceRepository.findByNameContaining(name);
     }
 

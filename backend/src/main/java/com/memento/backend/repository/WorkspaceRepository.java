@@ -8,7 +8,7 @@ import com.memento.backend.model.Workspace;
 
 public interface WorkspaceRepository extends MongoRepository<Workspace, String> {
 
-    Workspace findByNameContaining(String name);
+    List<Workspace> findByNameContaining(String name);
 
     Workspace findByName(String name);
 
