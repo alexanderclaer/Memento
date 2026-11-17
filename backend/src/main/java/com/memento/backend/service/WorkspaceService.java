@@ -54,6 +54,7 @@ public class WorkspaceService {
         if (workspace==null) {return null;}
 
         workspace.setName(name);
+        updateWorkspace(workspace);
         return name;
     }
 
