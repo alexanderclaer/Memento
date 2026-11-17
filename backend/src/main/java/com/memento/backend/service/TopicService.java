@@ -11,9 +11,11 @@ import com.memento.backend.repository.TopicRepository;
 @Service 
 public class TopicService {
     private final TopicRepository topicRepository;
+    private final NoteService noteService;
 
-    public TopicService(TopicRepository topicRepository) {
-        this.topicRepository = topicRepository;   
+    public TopicService(TopicRepository topicRepository, NoteService noteService) {
+        this.topicRepository = topicRepository;
+        this.noteService = noteService;
     }
 
     public Topic createTopic(Topic topic) {
@@ -29,6 +31,7 @@ public class TopicService {
         if (topic == null) {
             return null;
         }
+        noteService.deleteByTopicId(topic.getId());
         topicRepository.delete(topic);
         return topic;
     }
@@ -97,7 +100,7 @@ public class TopicService {
     }
 
     public void deleteByNotebookId(String notebookId) {
-        topicRepository.deleteByNotebookId(notebookId);
+        topicRepository.findTopicByNotebookId(notebookId).forEach(this::deleteTopic);
     }
 
 }
